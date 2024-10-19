@@ -46,7 +46,7 @@ function Navbar() {
           }}
           transition={{ delay: 0.1 }}
         >
-          <Searchbar />
+          <Searchbar setIsOpen={setIsOpen} />
           {linksArray.map((val, ind) => {
             return (
               <NavbarLinks

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AnimatedList from './animatable-components/AnimatedList';
 
-export default function Searchbar() {
+export default function Searchbar({ setIsOpen }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [currentURL, setCurrentURL] = useState('');
@@ -15,6 +15,7 @@ export default function Searchbar() {
   const onSeeAllResultsClick = () => {
     console.log('CurrentURL', currentURL);
     setShouldShowListing(false);
+    setIsOpen(false);
     navigate('/searchResults', { state: { query: currentURL } });
   };
 
