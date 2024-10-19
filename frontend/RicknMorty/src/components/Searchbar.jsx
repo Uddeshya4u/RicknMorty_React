@@ -8,12 +8,14 @@ export default function Searchbar() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [currentURL, setCurrentURL] = useState('');
+  const [shouldShowListing, setShouldShowListing] = useState(false);
   const navigate = useNavigate();
 
   // Functions
   const onSeeAllResultsClick = () => {
     console.log('CurrentURL', currentURL);
-    navigate('/', { state: { query: currentURL } });
+    setShouldShowListing(false);
+    navigate('/searchResults', { state: { query: currentURL } });
   };
 
   const handleSearchInput = (e) => {
@@ -21,16 +23,21 @@ export default function Searchbar() {
   };
 
   const fetchCharacters = async (query) => {
-    const response = await axios.get(
-      `https://rickandmortyapi.com/api/character/?&name=${query}`
-    );
-    const characterList = response.data.results;
-    if (characterList.length >= 5) {
-      setResults(characterList.slice(0, 5));
-      setCurrentURL(query);
-    } else {
-      setResults(characterList);
-      setCurrentURL(query);
+    try {
+      const response = await axios.get(
+        `https://rickandmortyapi.com/api/character/?&name=${query}`
+      );
+      const characterList = response.data.results;
+      if (characterList.length >= 5) {
+        setResults(characterList.slice(0, 5));
+        setCurrentURL(query);
+      } else {
+        setResults(characterList);
+        setCurrentURL(query);
+      }
+      setShouldShowListing(true);
+    } catch (error) {
+      console.log(`Error While Searching for ${query} and error is ${query}`);
     }
   };
   useEffect(() => {
@@ -38,8 +45,10 @@ export default function Searchbar() {
       if (query) {
         fetchCharacters(query);
       } else if (query && results.length == 0) {
+        setShouldShowListing(false);
         setResults([]);
       } else {
+        setShouldShowListing(false);
         setResults([]);
       }
     }, 300);
@@ -54,7 +63,7 @@ export default function Searchbar() {
         className='p-1 rounded text-2xl RnM-font-regular bg-appBG text-cementGray w-[120px] lg:w-max '
         onChange={handleSearchInput}
       />
-      {results.length > 0 && (
+      {results.length > 0 && shouldShowListing && (
         <div className='w-max rounded-xl bg-black p-2 absolute top-0 left-28 border-white border-2 md:top-0 md:right-0 lg:top-12 lg:left-0 lg:z-50'>
           <AnimatedList residents={results} />
           <RedirectButton

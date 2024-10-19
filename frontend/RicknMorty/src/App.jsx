@@ -7,6 +7,7 @@ import Episodes from './Pages/Episodes';
 import Profile from './Pages/Profile';
 import AboutUs from './Pages/AboutUs';
 import Location from './Pages/Location';
+import SearchResults from './Pages/SearchResults';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               />
               <Route path='/episodes' element={<Episodes />} />
               <Route path='/location' element={<Location />} />
+              <Route path='/searchResults' element={<SearchResults />} />
               {/* <Route path='/profile' element={<Profile />} /> */}
             </Routes>
           </main>
