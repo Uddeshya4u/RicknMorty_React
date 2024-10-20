@@ -29,9 +29,7 @@ function App() {
               {/* <Route path='/profile' element={<Profile />} /> */}
             </Routes>
           </main>
-          <footer>
-            <AboutUs />
-          </footer>
+          <AboutUs />
         </div>
       </BrowserRouter>
     </>
